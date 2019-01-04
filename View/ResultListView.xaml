@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="WpfApp1.View.ResultListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d">
+    <ListView ItemsSource="{Binding ResultItemsList}">
+        <ListView.View>
+            <GridView ScrollViewer.CanContentScroll="True">
+                <GridViewColumn Header="Company identification"
+                                DisplayMemberBinding="{Binding Path=CompanyId}">
+                </GridViewColumn>
+                <GridViewColumn Header="Company name"
+                                DisplayMemberBinding="{Binding Path=CompanyName}">
+                </GridViewColumn>
+                <GridViewColumn Header="Country name"
+                                DisplayMemberBinding="{Binding Path=CompanyCountryCode}">
+                </GridViewColumn>
+                <GridViewColumn Header="Company type"
+                                DisplayMemberBinding="{Binding Path=CompanyType}">
+                </GridViewColumn>
+            </GridView>
+        </ListView.View>
+    </ListView>
+</UserControl>
+

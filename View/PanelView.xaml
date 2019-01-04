@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="WpfApp1.View.PanelView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:WpfApp1.ApplicationLogic;assembly=Application"
+        xmlns:local="clr-namespace:WpfApp1.View"
+        mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+        <DataTemplate DataType = "{x:Type viewModels:ResultListViewModel}">
+            <local:ResultListView></local:ResultListView>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontWeight="Bold" Margin="16 8 0 0">Company filter</TextBlock>
+        <Border Grid.Row="1" Margin="16 8 16 16" BorderThickness="1" BorderBrush="Black">
+            <Grid Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Row="0" Grid.Column="0" Margin="0 0 2 0">
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 4 0">Company id:</TextBlock>
+                    <TextBox Text="{Binding CompanyIdFilter, UpdateSourceTrigger=PropertyChanged}"
+                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                </DockPanel>
+                <DockPanel Grid.Row="0" Grid.Column="1" Margin="2 0 2 0">
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 4 0">Company name:</TextBlock>
+                    <TextBox Text="{Binding CompanyNameFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </DockPanel>
+                <DockPanel Grid.Row="0" Grid.Column="2" Margin="2 0 2 0">
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 4 0">Country code:</TextBlock>
+                    <TextBox Text="{Binding CountryCodeFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </DockPanel>
+                <DockPanel Grid.Row="0" Grid.Column="3" Margin="2 0 0 0">
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 4 0">Company type:</TextBlock>
+                    <ComboBox ItemsSource="{Binding CompanyTypes}" 
+                              SelectedItem="{Binding SelectedCompanyTypeFilter}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Value}"></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+
+                <Button Grid.Row="1" 
+                        Grid.Column="3" 
+                        Width="50" 
+                        Margin="0 2 0 0"
+                        HorizontalAlignment="Right"
+                        Command="{Binding FindCommand}" 
+                        IsDefault="True">Find</Button>
+
+                <TextBlock Grid.Row="2" Grid.Column="0">Results:</TextBlock>
+                <TextBlock Grid.Row="3" 
+                           Grid.ColumnSpan="4"
+                           Margin="50 16 0 0"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Panel.ZIndex="5"
+                           Visibility="{Binding Loading, Converter={StaticResource BooleanToVisibilityConverter}}">Loading..</TextBlock>
+                <ContentControl Grid.Row="3" 
+                                Grid.ColumnSpan="4" 
+                                Margin="0 8 0 0"
+                                Height="300"
+                                IsEnabled="{Binding ResultGridEnabled}"
+                                Content="{Binding ResultListViewModel}">
+                </ContentControl>
+                <Button Grid.Row="4" 
+                        Grid.Column="0" 
+                        Width="50" 
+                        Margin="0 2 0 0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding InsertCommand}">Insert</Button>
+            </Grid>
+        </Border>
+        <Button Grid.Row="2" 
+                        Width="50" 
+                        Margin="0 -8 16 0"
+                        HorizontalAlignment="Right"
+                        Command="{Binding CloseCommand}">Close</Button>
+    </Grid>
+    
+</UserControl>
+
